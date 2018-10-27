@@ -9,24 +9,6 @@
   "bugs": {
     "url": "https://github.com/eeynard/react-easter-egg/issues"
   },
-  "scripts": {
-    "build": "babel ./src --ignore *.test.js --out-dir ./dist",    
-    "lint": "eslint ./src",
-    "lint:fix": "eslint --fix ./src",
-    "prepublish": "npm run build"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "npm run lint:fix",
-      "git add"
-    ]
-  },
-  "browserslist": "> 0.25%, not dead",
   "repository": {
     "type": "git",
     "url": "git@github.com:drookyn/react-easteregg.git"
@@ -42,6 +24,31 @@
     "cheatcode",
     "cheat"
   ],
+  "scripts": {
+    "build": "rimraf \"./dist\" && babel --ignore **/*.test.js ./src --out-dir ./dist",
+    "lint": "eslint --ext .jsx --ext .js ./src",
+    "lint:fix": "eslint --ext .jsx --ext .js --fix ./src",
+    "prepublish": "npm run lint && npm run test && npm run build",
+    "test": "jest",
+    "test:clear": "jest --clearCache",
+    "test:watch": "jest --watch"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "npm run lint:fix",
+      "git add"
+    ]
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "peerDependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
@@ -53,13 +60,21 @@
     "@babel/polyfill": "7.0.0",
     "@babel/preset-env": "7.1.0",
     "@babel/preset-react": "7.0.0",
+    "babel-core": "^7.0.0-0",
     "babel-eslint": "10.0.1",
+    "babel-jest": "23.6.0",
+    "enzyme": "3.7.0",
+    "enzyme-adapter-react-16": "1.6.0",
+    "enzyme-to-json": "3.3.4",
     "eslint": "5.3.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.1",
     "eslint-plugin-react": "7.11.0",
     "husky": "1.1.2",
-    "lint-staged": "7.3.0"
+    "jest": "23.6.0",
+    "lint-staged": "7.3.0",
+    "regenerator-runtime": "0.12.1",
+    "rimraf": "2.6.2"
   }
 }

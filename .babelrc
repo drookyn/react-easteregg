@@ -8,5 +8,7 @@
     ],
     "@babel/preset-react"
   ],
-  "plugins": ["@babel/plugin-transform-modules-umd"]
+  "plugins": [
+    "@babel/plugin-transform-modules-umd"
+  ]
 }
