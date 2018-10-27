@@ -1,3 +1,4 @@
-import EasterEgg from './EasterEgg/EasterEgg';
+import { EasterEgg } from './components';
 
 export default EasterEgg;
+export * from './utils';

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-import EasterEgg from '../../src/EasterEgg/EasterEgg';
+import { EasterEgg } from '../../src/components';
 
 describe('<EasterEgg />', () => {
   describe('render()', () => {
