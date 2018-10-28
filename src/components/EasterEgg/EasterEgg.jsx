@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EventListener from 'react-event-listener';
 
-import { KEY_CODES, CHEAT_CODES } from '../../utils';
+import { KEY_CODES, CHEAT_CODES, getAllByKeyCode } from '../../utils';
 
 /**
  * EasterEgg component
@@ -62,20 +62,25 @@ export default class EasterEgg extends React.PureComponent {
     const {
       shiftKey,
       altKey,
-      code,
+      ctrlKey,
+      key,
     } = event;
 
+    const allShiftCodes = getAllByKeyCode(KEY_CODES.shift);
+    const allAltCodes = getAllByKeyCode(KEY_CODES.alt);
+    const allCtrlCodes = getAllByKeyCode(KEY_CODES.control);
+
     if (
-      !this.lastShiftKey
-      && !this.lastAltKey
-      && !this.lastCtrlKey
+      !(this.lastShiftKey && allShiftCodes.includes(key.toLowerCase()))
+      && !(this.lastAltKey && allAltCodes.includes(key.toLowerCase()))
+      && !(this.lastCtrlKey && allCtrlCodes.includes(key.toLowerCase()))
     ) {
       this.checkKeyStroke(event);
     }
 
     this.lastShiftKey = shiftKey;
     this.lastAltKey = altKey;
-    this.lastCtrlKey = code === 'ControlLeft' || code === 'ControlRight';
+    this.lastCtrlKey = ctrlKey || allCtrlCodes.includes(key.toLowerCase());
   }
 
   render() {

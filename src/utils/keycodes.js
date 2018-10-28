@@ -3,8 +3,12 @@ const KEY_CODES = {
   tab: 9,
   enter: 13,
   shift: 16,
+  '⇧': 16,
+  control: 17,
   ctrl: 17,
+  ctl: 17,
   alt: 18,
+  option: 18,
   'pause/break': 19,
   'caps lock': 20,
   esc: 27,
@@ -43,13 +47,9 @@ const KEY_CODES = {
   ']': 221,
   "'": 222,
   windows: 91,
-  '⇧': 16,
   '⌥': 18,
   '⌃': 17,
   '⌘': 91,
-  ctl: 17,
-  control: 17,
-  option: 18,
   pause: 19,
   break: 19,
   caps: 20,
@@ -87,12 +87,20 @@ for (let i = 0; i < 10; i += 1) {
 
 // reverse
 Object.entries(KEY_CODES).forEach(([key, value]) => {
-  KEY_CODES[value] = key;
+  if (!KEY_CODES[value]) KEY_CODES[value] = key;
 });
 
 export const strToSequence = (str) => {
   if (typeof str !== 'string') return [];
   return str.split('').map(c => KEY_CODES[c]);
 };
+
+export const getAllByKeyCode = keyCode => (
+  Object.entries(KEY_CODES)
+    .reduce((acc, [key, value]) => {
+      if (value === keyCode) acc.push(key);
+      return acc;
+    }, [])
+);
 
 export default KEY_CODES;

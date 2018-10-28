@@ -25,17 +25,18 @@
     "cheat"
   ],
   "scripts": {
-    "dist": "rimraf \"./dist\" && babel --ignore **/*.test.js ./src --out-dir ./dist",
+    "build": "rimraf \"./dist\" && babel --ignore **/*.test.js ./src --out-dir ./dist",
     "lint": "eslint --ext .jsx --ext .js ./src",
     "lint:fix": "eslint --ext .jsx --ext .js --fix ./src",
-    "prepublish": "npm run lint && npm run test && npm run dist",
-    "test": "jest",
+    "prepublish": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test",
+    "test": "jest --updateSnapshot --ci",
     "test:clear": "jest --clearCache",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch --updateSnapshot"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run test && lint-staged"
     }
   },
   "lint-staged": {
@@ -49,6 +50,10 @@
     "not dead",
     "not op_mini all"
   ],
+  "dependencies": {
+    "prop-types": "15.6.2",
+    "react-event-listener": "0.6.4"
+  },
   "peerDependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
@@ -79,9 +84,5 @@
     "regenerator-runtime": "0.12.1",
     "rimraf": "2.6.2",
     "sinon": "7.1.0"
-  },
-  "dependencies": {
-    "prop-types": "15.6.2",
-    "react-event-listener": "0.6.4"
   }
 }
