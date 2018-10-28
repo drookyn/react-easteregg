@@ -5,13 +5,13 @@
 ### with npm:
 
 ```sh
-npm install --save react-easteregg
+npm install --save @drookyn/react-easteregg
 ```
 
 ### with yarn:
 
 ```sh
-yarn add react-easteregg
+yarn add @drookyn/react-easteregg
 ```
 
 ## Basic Usage
