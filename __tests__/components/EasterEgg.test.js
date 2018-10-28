@@ -136,8 +136,19 @@ describe('<EasterEgg />', () => {
       expect(state.show).toEqual(true);
     });
 
-    test('myCheatCode', () => {
+    test('myCustomSequence', () => {
       const sequence = strToSequence('myCustomSequence');
+      const wrapper = mount(<EasterEgg sequence={sequence} />);
+
+      sequence.forEach(code => map.keyup({ key: KEY_CODES[code] }));
+
+      const { state } = wrapper.instance();
+      expect(state.index).toEqual(sequence.length - 1);
+      expect(state.show).toEqual(true);
+    });
+
+    test('!"§$%&/()=?`,.-;:_#+*\'', () => {
+      const sequence = strToSequence('!"§$%&/()=?`,.-;:_#+*\'');
       const wrapper = mount(<EasterEgg sequence={sequence} />);
 
       sequence.forEach(code => map.keyup({ key: KEY_CODES[code] }));
