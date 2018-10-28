@@ -70,6 +70,11 @@ for (let i = 97; i < 123; i += 1) {
   KEY_CODES[String.fromCharCode(i)] = i - 32;
 }
 
+// upper case chars
+for (let i = 97; i < 123; i += 1) {
+  KEY_CODES[String.fromCharCode(i).toUpperCase()] = i - 32 + 1000;
+}
+
 // numbers
 for (let i = 48; i < 58; i += 1) {
   KEY_CODES[i - 48] = i;

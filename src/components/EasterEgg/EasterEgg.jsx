@@ -29,7 +29,7 @@ export default class EasterEgg extends React.PureComponent {
     /** ↑↑↓↓←→←→BA */
     sequence: CHEAT_CODES.KONAMI_CODE,
     callback: null,
-    children: false,
+    children: null,
     disabled: false,
     target: 'window',
   };

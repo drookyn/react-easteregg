@@ -4,7 +4,7 @@ import toJson from 'enzyme-to-json';
 import { spy } from 'sinon';
 
 import { EasterEgg } from '../../src/components';
-import { CHEAT_CODES, KEY_CODES } from '../../src/utils';
+import { CHEAT_CODES, KEY_CODES, strToSequence } from '../../src/utils';
 
 describe('<EasterEgg />', () => {
   describe('render()', () => {
@@ -111,6 +111,17 @@ describe('<EasterEgg />', () => {
 
       const { state } = wrapper.instance();
       expect(state.index).toEqual(CHEAT_CODES.EC2_TROOPER.length - 1);
+      expect(state.show).toEqual(true);
+    });
+
+    test('myCheatCode', () => {
+      const sequence = strToSequence('myCustomSequence');
+      const wrapper = mount(<EasterEgg sequence={sequence} />);
+
+      sequence.forEach(code => map.keyup({ key: KEY_CODES[code] }));
+
+      const { state } = wrapper.instance();
+      expect(state.index).toEqual(sequence.length - 1);
       expect(state.show).toEqual(true);
     });
   });

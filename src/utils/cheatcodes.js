@@ -1,6 +1,6 @@
 import KEY_CODES, { strToSequence } from './keycodes';
 
-// ↑↑↓↓←→←→BA
+// ↑↑↓↓←→←→ba
 export const KONAMI_CODE = [
   KEY_CODES.up,
   KEY_CODES.up,
