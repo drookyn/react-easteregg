@@ -1,6 +1,6 @@
 {
   "name": "@drookyn/react-easteregg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simply add easter eggs to your react application with this react component.",
   "main": "index.js",
   "author": "Florian Vogt <npm@vogt-da.de>",
@@ -28,11 +28,11 @@
     "build": "rimraf \"./dist\" && babel --ignore **/*.test.js ./src --out-dir ./dist",
     "lint": "eslint --ext .jsx --ext .js ./src",
     "lint:fix": "eslint --ext .jsx --ext .js --fix ./src",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run lint && npm run test",
     "test": "jest --updateSnapshot",
-    "test:coverage": "jest --updateSnapshot --coverage",
     "test:clear": "jest --clearCache",
+    "test:coverage": "jest --updateSnapshot --coverage",
     "test:watch": "jest --watch --updateSnapshot"
   },
   "husky": {
