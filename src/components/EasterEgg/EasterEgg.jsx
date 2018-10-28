@@ -23,6 +23,7 @@ export default class EasterEgg extends React.PureComponent {
       PropTypes.oneOf(['window', 'document']),
       PropTypes.node,
     ]),
+    timeout: PropTypes.number,
   };
 
   static defaultProps = {
@@ -32,14 +33,19 @@ export default class EasterEgg extends React.PureComponent {
     children: null,
     disabled: false,
     target: 'window',
+    timeout: null,
   };
 
-  initialState = { index: 0, show: false };
+  initialState = { index: 0, show: false, timeout: null };
 
   state = this.initialState;
 
+  resetEasterEgg = () => {
+    this.setState(() => this.initialState);
+  }
+
   checkKeyStroke = (event) => {
-    const { sequence, callback } = this.props;
+    const { sequence, callback, timeout } = this.props;
     const { index, show } = this.state;
     const { keyCode, key } = event;
     const code = KEY_CODES[key] || keyCode;
@@ -48,7 +54,11 @@ export default class EasterEgg extends React.PureComponent {
 
     if (code === sequence[index]) {
       if (sequence.length <= index + 1) {
-        this.setState(() => ({ show: true }));
+        this.setState(() => ({
+          show: true,
+          timeout: timeout ? setTimeout(this.resetEasterEgg, timeout) : null,
+        }));
+
         if (typeof callback === 'function') callback();
       } else {
         this.setState(state => ({ index: state.index + 1 }));

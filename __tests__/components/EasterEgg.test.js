@@ -77,11 +77,33 @@ describe('<EasterEgg />', () => {
 
       CHEAT_CODES.KONAMI_CODE.forEach(code => map.keyup({ key: KEY_CODES[code] }));
 
+      wrapper.update();
       const { state } = wrapper.instance();
       expect(state.index).toEqual(CHEAT_CODES.KONAMI_CODE.length - 1);
       expect(state.show).toEqual(true);
       expect(callback.calledOnce).toBe(true);
-      expect(wrapper.children()).toHaveLength(1);
+      expect(wrapper.find('.success').exists()).toBeTruthy();
+    });
+
+    test('state reset after timeout', () => {
+      const timeout = 500;
+      const wrapper = mount(
+        <EasterEgg timeout={timeout}>
+          <span className="success">Noice!</span>
+        </EasterEgg>,
+      );
+
+      CHEAT_CODES.KONAMI_CODE.forEach(code => map.keyup({ key: KEY_CODES[code] }));
+
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+          wrapper.update();
+          const { state, initialState } = wrapper.instance();
+          expect(state).toEqual(initialState);
+          expect(wrapper.find('.success').exists()).toBeFalsy();
+        }, timeout);
+      });
     });
 
     test('quarry success', () => {

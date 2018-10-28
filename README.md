@@ -76,7 +76,8 @@ render() {
 | children  | node           | null        | No       | A component to render when the user successfully entered the code                                     |
 | callback  | function       | null        | No       | A callback triggered when the user successfully entered the code                                      |
 | disable   | boolean        | false       | No       | A boolean to hide the easter egg                                                                      |
-| target    | string\|node    | window      | No       | A string (window|document) or node to bind the keyUp listener to                                      |
+| target    | string\|node   | window      | No       | A string (window|document) or node to bind the keyUp listener to                                      |
+| timeout   | number         | null        | No       | A number representing the milliseconds after the easter egg will resets itself                        |
 
 ## Dependencies
 This project uses [react-event-listener](https://www.npmjs.com/package/react-event-listener) to bind event listeners.
