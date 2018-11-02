@@ -27,3 +27,4 @@ __tests__
 coverage
 jest.config.js
 src
+webpack.config.js
