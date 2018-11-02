@@ -23,7 +23,14 @@ export default class EasterEgg extends React.PureComponent {
       PropTypes.oneOf(['window', 'document']),
       PropTypes.node,
     ]),
+    /** After which time the easter egg resets. */
     timeout: PropTypes.number,
+    /** Function, which get called after reset. */
+    onReset: PropTypes.func,
+    /** Function, which get called after disable. */
+    onDisable: PropTypes.func,
+    /** Same as callback. */
+    onShow: PropTypes.func,
   };
 
   static defaultProps = {
@@ -34,18 +41,56 @@ export default class EasterEgg extends React.PureComponent {
     disabled: false,
     target: 'window',
     timeout: null,
+    onReset: null,
+    onDisable: null,
+    onShow: null,
   };
 
-  initialState = { index: 0, show: false, timeout: null };
+  initialState = {
+    index: 0,
+    show: false,
+    timeout: null,
+    disabled: false,
+  };
 
   state = this.initialState;
 
+  getAdditionalProps(children) {
+    if (!children || !children.type || !children.type.name) {
+      return {};
+    }
+
+    return {
+      resetEasterEgg: this.resetEasterEgg,
+      disableEasterEgg: this.disableEasterEgg,
+    };
+  }
+
   resetEasterEgg = () => {
-    this.setState(() => this.initialState);
+    const { onReset } = this.props;
+
+    this.setState(
+      () => this.initialState,
+      onReset,
+    );
+  }
+
+  disableEasterEgg = () => {
+    const { onDisable } = this.props;
+
+    this.setState(
+      () => ({ disabled: true }),
+      onDisable,
+    );
   }
 
   checkKeyStroke = (event) => {
-    const { sequence, callback, timeout } = this.props;
+    const {
+      sequence,
+      callback,
+      timeout,
+      onShow,
+    } = this.props;
     const { index, show } = this.state;
     const { keyCode, key } = event;
     const code = KEY_CODES[key] || keyCode;
@@ -59,7 +104,7 @@ export default class EasterEgg extends React.PureComponent {
           timeout: timeout ? setTimeout(this.resetEasterEgg, timeout) : null,
         }));
 
-        if (typeof callback === 'function') callback();
+        if (callback || onShow) (callback || onShow)();
       } else {
         this.setState(state => ({ index: state.index + 1 }));
       }
@@ -94,8 +139,11 @@ export default class EasterEgg extends React.PureComponent {
   }
 
   render() {
-    const { disabled, children, target } = this.props;
+    const { disabled: stateDisabled } = this.state;
+    const { disabled: propsDisabled, children, target } = this.props;
     const { show } = this.state;
+
+    if (children) React.Children.only(children);
 
     return (
       <>
@@ -104,7 +152,9 @@ export default class EasterEgg extends React.PureComponent {
           onKeyUp={this.handleKeyStroke}
         />
         {
-          show && !disabled && children
+          show && !stateDisabled && !propsDisabled && children && (
+            React.cloneElement(children, this.getAdditionalProps(children))
+          )
         }
       </>
     );

@@ -1,6 +1,6 @@
 {
   "name": "@drookyn/react-easteregg",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Simply add easter eggs to your react application with this react component.",
   "main": "index.js",
   "author": "Florian Vogt <npm@vogt-da.de>",

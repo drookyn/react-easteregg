@@ -74,10 +74,19 @@ render() {
 |-----------|----------------|:-----------:|:--------:|-------------------------------------------------------------------------------------------------------|
 | sequence  | array          | [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]   | No       | An array of integer representing the sequence of keyCodes to listen to |
 | children  | node           | null        | No       | A component to render when the user successfully entered the code                                     |
-| callback  | function       | null        | No       | A callback triggered when the user successfully entered the code                                      |
 | disable   | boolean        | false       | No       | A boolean to hide the easter egg                                                                      |
 | target    | string\|node   | window      | No       | A string (window\|document) or node to bind the keyUp listener to                                     |
 | timeout   | number         | null        | No       | A number representing the milliseconds after the easter egg will resets itself                        |
+| onShow    | function       | null        | No       | A callback triggered when the user successfully entered the code                                      |
+| onReset   | function       | null        | No       | A callback triggered after the easter egg was reset                                                   |
+| onDisable | function       | null        | No       | A callback triggered after the easter egg was disabled                                                |
+| callback (deprecated)  | function       | null        | No       | A callback triggered when the user successfully entered the code                         |
+
+## Props passed to child
+| Key              | Value          | Description                                             |
+|------------------|----------------|---------------------------------------------------------|
+| resetEasterEgg   | function       | Resets the easter egg                                   |
+| disableEasterEgg | function       | Disables the easter egg                                 |
 
 ## Dependencies
 This project uses [react-event-listener](https://www.npmjs.com/package/react-event-listener) to bind event listeners.

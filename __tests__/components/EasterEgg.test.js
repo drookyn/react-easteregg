@@ -40,6 +40,12 @@ describe('<EasterEgg />', () => {
       const { initialState } = wrapper.instance();
       expect(initialState.show).toEqual(false);
     });
+
+    test('disabled is false', () => {
+      const wrapper = shallow(<EasterEgg />);
+      const { initialState } = wrapper.instance();
+      expect(initialState.disabled).toEqual(false);
+    });
   });
 
   describe('functionality', () => {
@@ -71,6 +77,24 @@ describe('<EasterEgg />', () => {
       const callback = spy();
       const wrapper = mount(
         <EasterEgg callback={callback}>
+          <span className="success">Noice!</span>
+        </EasterEgg>,
+      );
+
+      CHEAT_CODES.KONAMI_CODE.forEach(code => map.keyup({ key: KEY_CODES[code] }));
+
+      wrapper.update();
+      const { state } = wrapper.instance();
+      expect(state.index).toEqual(CHEAT_CODES.KONAMI_CODE.length - 1);
+      expect(state.show).toEqual(true);
+      expect(callback.calledOnce).toBe(true);
+      expect(wrapper.find('.success').exists()).toBeTruthy();
+    });
+
+    test('onShow gets called, children are shown on success', () => {
+      const callback = spy();
+      const wrapper = mount(
+        <EasterEgg onShow={callback}>
           <span className="success">Noice!</span>
         </EasterEgg>,
       );
